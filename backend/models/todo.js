@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const todoSchema = new mongoose.Schema({
-  name: { type: String, required: true, minlength: 3, maxlength: 200 },
+  task: { type: String, required: true, minlength: 3, maxlength: 200 },
   author: String,
   uid: String,
   isComplete: Boolean,
