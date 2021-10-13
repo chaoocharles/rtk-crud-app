@@ -4,16 +4,24 @@ import axios from "axios";
 const initialState = {
   todos: [],
   status: null,
+  error: "",
 };
 
-export const todosAdd = createAsyncThunk("products/todosAdd", async (todo) => {
-  try {
-    const response = await axios.post("http://localhost:5000/api/todos", todo);
-    return response.data;
-  } catch (error) {
-    console.log(error);
+export const todosAdd = createAsyncThunk(
+  "products/todosAdd",
+  async (todo, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/todos",
+        todo
+      );
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error.response?.data);
+    }
   }
-});
+);
 
 const todosSlice = createSlice({
   name: "products",
@@ -29,6 +37,7 @@ const todosSlice = createSlice({
     },
     [todosAdd.rejected]: (state, action) => {
       state.status = "rejected";
+      state.error = action.payload;
     },
   },
 });
