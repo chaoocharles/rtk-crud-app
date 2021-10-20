@@ -4,11 +4,11 @@ import { todosAdd } from "../features/todosSlice";
 
 const AddTodo = () => {
   const dispatch = useDispatch();
-  const todos = useSelector((state) => state.todos);
-  console.log(todos.status);
+  const todosState = useSelector((state) => state.todosState);
   const [todo, setTodo] = useState({
     task: "",
     isComplete: false,
+    date: new Date(),
   });
 
   const handleSubmit = (e) => {
@@ -19,6 +19,7 @@ const AddTodo = () => {
     setTodo({
       task: "",
       isComplete: false,
+      date: new Date(),
     });
   };
 
@@ -29,16 +30,18 @@ const AddTodo = () => {
           type="text"
           placeholder="Enter a task"
           value={todo.task}
-          onChange={(e) => setTodo({ ...todo, task: e.target.value })}
+          onChange={(e) =>
+            setTodo({ ...todo, task: e.target.value, date: new Date() })
+          }
         />
         <br />
         <br />
         <input
           type="submit"
-          value={todos.status === "pending" ? "Submitting" : "Add Task"}
+          value={todosState.status === "pending" ? "Submitting" : "Add Task"}
         />
-        {todos.status === "rejected" ? <p>{todos.error}</p> : null}
-        {todos.status === "success" ? <p>Task Added</p> : null}
+        {todosState.status === "rejected" ? <p>{todosState.error}</p> : null}
+        {todosState.status === "success" ? <p>Task Added</p> : null}
       </form>
     </>
   );

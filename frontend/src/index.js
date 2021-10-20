@@ -8,7 +8,7 @@ import todosReducer from "./features/todosSlice";
 
 const store = configureStore({
   reducer: {
-    todos: todosReducer,
+    todosState: todosReducer,
   },
 });
 
