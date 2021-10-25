@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { deleteTodo, getTodos } from "../features/todosSlice";
 import moment from "moment";
 
-const ListTodos = () => {
+const ListTodos = ({ setTodo }) => {
   const dispatch = useDispatch();
   const { todos } = useSelector((state) => state.todosState);
 
@@ -22,6 +22,7 @@ const ListTodos = () => {
         <div key={todo._id}>
           <h3>{todo.task}</h3>
           <p>Added: {moment(todo.date).fromNow()}</p>
+          <button onClick={() => setTodo({ ...todo })}>Update</button>
           <button onClick={() => handleDelete(todo._id)}>Delete</button>
         </div>
       ))}

@@ -50,4 +50,33 @@ router.delete("/:id", async (req, res) => {
   res.send(deletedTodo);
 });
 
+router.put("/:id", async (req, res) => {
+  console.log(req.body);
+  const schema = Joi.object({
+    task: Joi.string().min(3).max(300).required(),
+    author: Joi.string().min(3),
+    uid: Joi.string(),
+    isComplete: Joi.boolean(),
+    date: Joi.date(),
+  });
+
+  const { error } = schema.validate(req.body);
+
+  if (error) return res.status(400).send(error.details[0].message);
+
+  const todo = await Todo.findById(req.params.id);
+
+  if (!todo) return res.status(404).send("Todo not found...");
+
+  const { task, author, isComplete, date, uid } = req.body;
+
+  const updatedTodo = await Todo.findByIdAndUpdate(
+    req.params.id,
+    { task, author, isComplete, date, uid },
+    { new: true }
+  );
+
+  res.send(updatedTodo);
+});
+
 export default router;

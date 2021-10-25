@@ -1,25 +1,27 @@
-import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { todosAdd } from "../features/todosSlice";
+import { todosAdd, updateTodo } from "../features/todosSlice";
 
-const AddTodo = () => {
+const AddTodo = ({ todo, setTodo }) => {
   const dispatch = useDispatch();
   const todosState = useSelector((state) => state.todosState);
-  const [todo, setTodo] = useState({
-    task: "",
-    isComplete: false,
-    date: new Date(),
-  });
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    dispatch(todosAdd(todo));
+    if (todo._id) {
+      dispatch(updateTodo(todo));
+    } else {
+      const newTodo = {
+        ...todo,
+        date: new Date(),
+      };
+
+      dispatch(todosAdd(newTodo));
+    }
 
     setTodo({
       task: "",
       isComplete: false,
-      date: new Date(),
     });
   };
 
@@ -30,18 +32,22 @@ const AddTodo = () => {
           type="text"
           placeholder="Enter a task"
           value={todo.task}
-          onChange={(e) =>
-            setTodo({ ...todo, task: e.target.value, date: new Date() })
-          }
+          onChange={(e) => setTodo({ ...todo, task: e.target.value })}
         />
         <br />
         <br />
         <input
           type="submit"
-          value={todosState.status === "pending" ? "Submitting" : "Add Task"}
+          value={
+            todosState.status === "pending"
+              ? "Submitting"
+              : todo._id
+              ? "Update Task"
+              : "Add Task"
+          }
         />
         {todosState.status === "rejected" ? <p>{todosState.error}</p> : null}
-        {todosState.status === "success" ? <p>Task Added</p> : null}
+        {todosState.status === "success" ? <p>Task Submitted</p> : null}
       </form>
     </>
   );

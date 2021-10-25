@@ -1,13 +1,20 @@
-import "./App.css";
+import { useState } from "react";
 import AddTodo from "./components/AddTodo";
 import ListTodos from "./components/ListTodos";
 
+import "./App.css";
+
 function App() {
+  const [todo, setTodo] = useState({
+    task: "",
+    isComplete: false,
+  });
+
   return (
     <>
       <h2>Todo App</h2>
-      <AddTodo />
-      <ListTodos />
+      <AddTodo todo={todo} setTodo={setTodo} />
+      <ListTodos setTodo={setTodo} />
     </>
   );
 }

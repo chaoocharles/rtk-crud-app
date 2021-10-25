@@ -55,6 +55,24 @@ export const deleteTodo = createAsyncThunk(
   }
 );
 
+export const updateTodo = createAsyncThunk(
+  "todos/updateTodo",
+  async (todo, { rejectWithValue }) => {
+    try {
+      const { _id, task, author, isComplete, date, uid } = todo;
+
+      const response = await axios.put(
+        "http://localhost:5000/api/todos/" + _id,
+        { task, author, isComplete, date, uid }
+      );
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error.response?.data);
+    }
+  }
+);
+
 const todosSlice = createSlice({
   name: "todos",
   initialState,
@@ -95,6 +113,20 @@ const todosSlice = createSlice({
     [deleteTodo.rejected]: (state, action) => {
       state.deleteTodoStatus = "rejected";
       state.deleteTodoError = action.payload;
+    },
+    [updateTodo.pending]: (state, action) => {
+      state.status = "pending";
+    },
+    [updateTodo.fulfilled]: (state, action) => {
+      const updatedTodos = state.todos.map((todo) =>
+        todo._id === action.payload._id ? action.payload : todo
+      );
+      state.todos = updatedTodos;
+      state.status = "success";
+    },
+    [updateTodo.rejected]: (state, action) => {
+      state.status = "rejected";
+      state.error = action.payload;
     },
   },
 });
