@@ -3,6 +3,7 @@ import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import todos from "./routes/todos.js";
+import register from "./routes/register.js";
 
 dotenv.config();
 
@@ -12,6 +13,7 @@ app.use(express.json());
 app.use(cors());
 
 app.use("/api/todos", todos);
+app.use("/api/register", register);
 
 app.get("/", (req, res) => {
   res.send("welcome to the todos api...");
