@@ -18,8 +18,6 @@ router.post("/", async (req, res) => {
   try {
     const schema = Joi.object({
       task: Joi.string().min(3).max(300).required(),
-      author: Joi.string().min(3),
-      uid: Joi.string(),
       isComplete: Joi.boolean(),
       date: Joi.date(),
     });
@@ -51,11 +49,8 @@ router.delete("/:id", async (req, res) => {
 });
 
 router.put("/:id", async (req, res) => {
-  console.log(req.body);
   const schema = Joi.object({
     task: Joi.string().min(3).max(300).required(),
-    author: Joi.string().min(3),
-    uid: Joi.string(),
     isComplete: Joi.boolean(),
     date: Joi.date(),
   });

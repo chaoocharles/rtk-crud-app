@@ -1,38 +1,27 @@
+@import url("https://fonts.googleapis.com/css2?family=Abel&display=swap");
+
+body {
+  font-family: "Abel", sans-serif;
+  font-size: 18px;
+  font-weight: 500;
+}
+
 .App {
-  text-align: center;
+  max-width: 350px;
+  margin: 2rem auto;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+form input {
+  min-width: 50%;
+  padding: 7px;
+  border: 1px solid rgb(143, 143, 143);
+  outline: none;
+  border-radius: 3px;
+  font-family: "Abel", sans-serif;
+  font-size: 18px;
+  font-weight: 500;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+form input:focus {
+  border: 1px solid #09f;
 }
